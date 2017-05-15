@@ -36,11 +36,11 @@
     file: state=directory path={{java_name}} owner=root group=root recurse=yes
 
   - name: Make Java available for system by updating alternatives
-    command: alternatives --install /usr/bin/java java /opt/oracle/jdk1.8.0_131/bin/java 2000
-    command: alternatives --install /usr/bin/jar jar /opt/oracle/jdk1.8.0_131/bin/jar 2
-    command: alternatives --install /usr/bin/javac javac /opt/oracle/jdk1.8.0_131/bin/javac 2
-    command: alternatives --set jar /opt/oracle/jdk1.8.0_131/bin/jar
-    command: alternatives --set javac /opt/oracle/jdk1.8.0_131/bin/javac
+    command: alternatives --install /usr/bin/java java {{ java_name }}/bin/java 2000
+    command: alternatives --install /usr/bin/jar jar {{ java_name }}/bin/jar 2
+    command: alternatives --install /usr/bin/javac javac {{ java_name }}/bin/javac 2
+    command: alternatives --set jar {{ java_name }}/bin/jar
+    command: alternatives --set javac {{ java_name }}/bin/javac
 
   - name: Set systemwide oracle env file under /etc/profile.d/
     set_fact: remote_file_path={{profile_path}}/oracle_jdk.sh
@@ -77,4 +77,3 @@
   # Export the env on th fly to make system wide change
   - name: Source the file {{profile_path}}/oracle_jdk.sh
     action: shell source /etc/profile
-                                      
