@@ -1,14 +1,12 @@
 ---
-- name: Add HOST and FQDN mappings to /etc/hosts
-  ansible.builtin.blockinfile:
-    path: /etc/hosts
-    block: |
-      {{ item.ip }} {{ item.fqdn }} {{ item.hostname }}
-    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item.hostname }}"
-  loop:
-    - { ip: 16.73.32.12, fqdn: sacdprekb8c1.ros.swinfra.net, hostname: sacdprekb8c1 }
-    - { ip: 16.73.32.13, fqdn: sacdprekb8c2.ros.swinfra.net, hostname: sacdprekb8c2 }
-    - { ip: 16.73.32.16, fqdn: sacdprekb8w1.ros.swinfra.net, hostname: sacdprekb8w1 }
-    - { ip: 16.73.32.19, fqdn: sacdprekb8w2.ros.swinfra.net, hostname: sacdprekb8w2 }
-    - { ip: 16.73.32.57, fqdn: sacdprekb8w3.ros.swinfra.net, hostname: sacdprekb8w3 }
-    - { ip: 16.73.32.58, fqdn: sacdprekb8w4.ros.swinfra.net, hostname: sacdprekb8w4 }
+- name: Adding /etc/hosts file entries on all the hosts
+  hosts: allRockyLinux
+  tasks:
+  - name: generate file
+    blockinfile:
+      backup: yes
+      path: /etc/hosts
+      block: |
+        {% for host in groups['allRockyLinux'] %} 
+        {{ hostvars[host]['ansible_facts']['ens192']['ipv4']['address'] }} {{ hostvars[host]['ansible_facts']['hostname']['.ros.swinfra.net'] }} {{ hostvars[host]['ansible_facts']['hostname'] }} 
+        {% endfor %}
