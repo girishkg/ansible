@@ -1,0 +1,79 @@
+---
+- hosts: new
+  remote_user: ansible
+  #sudo: yes
+  become: true
+  vars:
+    jdk_dir: 8u131-b11
+    jdk_archive: jdk-8u131-linux-x64.tar.gz
+    jdk_local_dir: jdk1.8.0_131
+    download_folder: /opt/oracle
+    bin_dir: /usr/bin
+    profile_path: /etc/profile.d
+    java_name: "{{ download_folder }}/{{ jdk_local_dir }}"
+    java_archive: "{{ download_folder }}/{{ jdk_archive }}"
+    download_url: http://download.oracle.com/otn-pub/java/jdk/{{jdk_dir}}/{{jdk_archive}}
+    java_version: 8
+    java_subversion: 131
+    java_build_custom: 11
+    jdk_version_detail_custom: "{{ java_version }}u{{ java_subversion }}-b{{ java_build_custom }}"
+    jdk_tarball_hash: d54c1d3a095b4ff2b6607d096fa80163
+    jdk_tarball_url: "http://download.oracle.com/otn-pub/java/jdk/{{ jdk_version_detail_custom }}/{{ jdk_tarball_hash }}/{{ jdk_archive }}"
+
+  tasks:
+  - name: Create Directory structure
+    command: mkdir -p {{download_folder}}
+    command: mkdir -p {{java_name}}
+
+  - name: Download Java
+    get_url: url={{ jdk_tarball_url }}  dest={{ java_archive }} headers="Cookie:' gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie'" validate_certs=no owner=root group=root mode=744
+
+  - name: Unpack archive
+   # command: "tar -xzvf {{java_archive}} -C {{download_folder}} creates={{java_name}}"
+    action: shell tar -xzvf {{java_archive}} -C {{download_folder}}
+
+  - name: Fix ownership
+    file: state=directory path={{java_name}} owner=root group=root recurse=yes
+
+  - name: Make Java available for system by updating alternatives
+    command: alternatives --install /usr/bin/java java {{ java_name }}/bin/java 2000
+    command: alternatives --install /usr/bin/jar jar {{ java_name }}/bin/jar 2
+    command: alternatives --install /usr/bin/javac javac {{ java_name }}/bin/javac 2
+    command: alternatives --set jar {{ java_name }}/bin/jar
+    command: alternatives --set javac {{ java_name }}/bin/javac
+
+  - name: Set systemwide oracle env file under /etc/profile.d/
+    set_fact: remote_file_path={{profile_path}}/oracle_jdk.sh
+
+  # Create a blank file
+  - name: Create a new file {{profile_path}}/oracle_jdk.sh
+    file: path={{remote_file_path}} state=touch
+
+  # Check remote file
+  - stat: path={{remote_file_path}}
+    register: file_path
+
+  # Write file content in file_content variable
+  #  - set_fact: file_content=""
+
+  # If file exist then copy content in remote file.
+  #  - copy: content={{file_content}} dest={{remote_file_path}}
+  #    when: file_path.stat.exists == true
+  #
+  # Copy /etc/profile.d/oracle_jdk.sh with content
+  - copy:
+      content: |
+                #!/bin/bash
+                export JDK_HOME={{ java_name }}
+                export JAVA_HOME={{ java_name }}
+                export JRE_HOME={{ java_name }}/jre
+                export PATH=$PATH:{{ java_name }}/bin:{{ java_name }}/jre/bin
+      dest: /etc/profile.d/oracle_jdk.sh
+
+  # Fix the executable permission
+  - name: Set executable perission
+    file: path={{profile_path}}/oracle_jdk.sh owner=root group=root mode=0555 state=file recurse=no
+
+  # Export the env on th fly to make system wide change
+  - name: Source the file {{profile_path}}/oracle_jdk.sh
+    action: shell source /etc/profile
