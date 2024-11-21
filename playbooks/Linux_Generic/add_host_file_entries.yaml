@@ -6,7 +6,7 @@
   tasks:
   - blockinfile:
       state: presetn
-      dest: etc_hosts
+      dest: /etc/hosts
       content: |
         {% for host in groups.allRockyLinux}
         {{ host }}
