@@ -1,6 +1,7 @@
 ---
 - name: Adding /etc/hosts file entries on all the Rocky / Alma / RHEL hosts
   hosts: allRockyLinux
+  gather_facts: true
   tasks:
   - name: Updating the /etc/hosts file
     blockinfile:
