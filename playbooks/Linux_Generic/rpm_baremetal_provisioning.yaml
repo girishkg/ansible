@@ -44,8 +44,8 @@
   - name: Enable NTP-Chrony on boot
     ansible.builtin.systemd_service:
       name: 
-        - chrony
-        - openssh-server
+        - chronyd
+        - sshd
       enabled: true
       masked: no
 
