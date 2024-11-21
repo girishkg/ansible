@@ -53,12 +53,12 @@
 ## blue.example.com
 ################################################################################
 [allRockyLinux]
-16.73.32.12 hostname=sacdprekb8c1 hostfqdn=sacdprekb8c1.ros.swinfra.net
-16.73.32.13 hostname=sacdprekb8c2 hostfqdn=sacdprekb8c2.ros.swinfra.net
-16.73.32.16 hostname=sacdprekb8w1 hostfqdn=sacdprekb8w1.ros.swinfra.net
-16.73.32.19 hostname=sacdprekb8w2 hostfqdn=sacdprekb8w2.ros.swinfra.net
-16.73.32.57 hostname=sacdprekb8w3 hostfqdn=sacdprekb8w3.ros.swinfra.net
-16.73.32.58 hostname=sacdprekb8w4 hostfqdn=sacdprekb8w4.ros.swinfra.net
+16.73.32.12 hostname=sacdprekb8c1 fqdn=sacdprekb8c1.ros.swinfra.net
+16.73.32.13 hostname=sacdprekb8c2 fqdn=sacdprekb8c2.ros.swinfra.net
+16.73.32.16 hostname=sacdprekb8w1 fqdn=sacdprekb8w1.ros.swinfra.net
+16.73.32.19 hostname=sacdprekb8w2 fqdn=sacdprekb8w2.ros.swinfra.net
+16.73.32.57 hostname=sacdprekb8w3 fqdn=sacdprekb8w3.ros.swinfra.net
+16.73.32.58 hostname=sacdprekb8w4 fqdn=sacdprekb8w4.ros.swinfra.net
 
 [k8controlnodes]
 16.73.32.12
