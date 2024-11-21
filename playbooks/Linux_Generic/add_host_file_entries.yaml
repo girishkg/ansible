@@ -2,11 +2,12 @@
 - name: Adding /etc/hosts file entries on all the hosts
   hosts: allRockyLinux
   tasks:
-  - name: generate file
+  - name: Updating the /etc/hosts file
     blockinfile:
       backup: yes
       path: /etc/hosts
+      attributes: 'fqdn:.ros.swinfra.net'
       block: |
         {% for host in groups['allRockyLinux'] %} 
-        {{ hostvars[host]['ansible_facts']['ens192']['ipv4']['address'] }} {{ hostvars[host]['ansible_facts']['hostname' + '.ros.swinfra.net'] }} {{ hostvars[host]['ansible_facts']['hostname'] }} 
+        {{ hostvars[host]['ansible_facts']['ens192']['ipv4']['address'] }} {{ hostvars[host]['ansible_facts']['hostname' + 'fqdn'] }} {{ hostvars[host]['ansible_facts']['hostname'] }} 
         {% endfor %}
