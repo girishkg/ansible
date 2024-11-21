@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  become: true
+  gather_facts: true
+
+  tasks:
+  - blockinfile:
+      state: presetn
+      dest: etc_hosts
+      content: |
+        {% for host in groups.allRockyLinux}
+        {{ host }}
+        {% endfor %}
