@@ -1,54 +1,54 @@
 ---
 - name: Install epel package
-  hosts: allRockyLinux
+  hosts: allRockyLinux:k8controlnodes:k8workernodes
   gather_facts: true
   become: true
   tasks:
-    - name: Install package epel-release
-        yum:
-          name: epel-release
-        state: present
+  - name: Install package epel-release
+      yum:
+        name: epel-release
+      state: present
 
 - name: Install basic packages
   hosts: allRockyLinux:k8controlnodes:k8workernodes
   gather_facts: true
   become: true
   tasks: 
-    -name: Install base packages
-      dnf:
-        name:
-          - wget
-          - openssl
-          - vim-common
-          - rsync
-          - telnet
-          - htop
-          - unzip
-          - bind-utils
-          - curl
-        state: latest
+  - name: Install base packages
+    dnf:
+      name:
+        - wget
+        - openssl
+        - vim-common
+        - rsync
+        - telnet
+        - htop
+        - unzip
+        - bind-utils
+        - curl
+      state: latest
 
 - name: Install Chrony-NTP for time sync
-  hosts:
+  hosts: allRockyLinux:k8controlnodes:k8workernodes
   gather_facts: true
   become: true
   tasks:
-    - name: Install NTP-Chrony
-      dnf:
-        name: 
-          - chrony
-          - openssh-server
-          - openssh-client
-        state: present
-    - name: Enable NTP-Chrony on boot
-      ansible.builtin.systemd_service:
-        name: 
-          - chrony
-          - openssh-server
-          - openssh-client
-        enabled: true
-        masked: no
+  - name: Install NTP-Chrony
+    dnf:
+      name: 
+        - chrony
+        - openssh-server
+        - openssh-client
+      state: present
+  - name: Enable NTP-Chrony on boot
+    ansible.builtin.systemd_service:
+      name: 
+        - chrony
+        - openssh-server
+        - openssh-client
+      enabled: true
+      masked: no
 
-- name: Just force systemd to reread configs (2.4 and above)
-  ansible.builtin.systemd_service:
-    daemon_reload: true
+  - name: Just force systemd to reread configs (2.4 and above)
+    ansible.builtin.systemd_service:
+      daemon_reload: true
