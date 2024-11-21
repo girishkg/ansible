@@ -8,5 +8,6 @@
       path: /etc/hosts
       block: |
         {% for host in groups['allRockyLinux'] %} 
-        {{ hostvars[host]['ansible_facts']['ens192']['ipv4']['address'] }} {{ hostvars[host]['ansible_facts']['hostname'] + '.ros.swinfra.net' }} {{ hostvars[host]['ansible_facts']['hostname'] }} 
+        {{ hostvars[host]['ansible_facts']['ip'] }} {{ hostvars[host]['ansible_facts']['hostname'] + '.ros.swinfra.net' }} {{ hostvars[host]['ansible_facts']['hostname'] }} 
         {% endfor %}
+# {{ hostvars[host]['ansible_facts']['ens192']['ipv4']['address'] }} {{ hostvars[host]['ansible_facts']['hostname'] + '.ros.swinfra.net' }} {{ hostvars[host]['ansible_facts']['hostname'] }} 
