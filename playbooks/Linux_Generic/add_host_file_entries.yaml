@@ -8,6 +8,6 @@
       state: present
       dest: /etc/hosts
       content: |
-        {% for host in groups.allRockyLinux}
+        {% for host in groups.allRockyLinux %}
         {{ host }}
         {% endfor %}
