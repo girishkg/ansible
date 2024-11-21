@@ -1,13 +1,12 @@
 ---
-- hosts: localhost
-  become: true
-  gather_facts: true
-
+- name: Add /etc/hosts file entries on all the hosts
+  hosts: allRockyLinux
   tasks:
-  - lineinfile:
-      state: present
-      dest: /etc/hosts
-      content: |
-        {% for host in groups.allRockyLinux %}
-        {{ host }}
+  - name: generate file
+    blockinfile:
+      backup: yes
+      path: /etc/hosts
+      block: |
+        {% for host in groups['allRockyLinux'] %} 
+        {{ hostvars[host]['ansible_facts']['ens192']['ipv4']['address'] }} {{ hostvars[host]['ansible_facts']['fqdn'] }} {{ hostvars[host]['ansible_facts']['hostname'] }} 
         {% endfor %}
