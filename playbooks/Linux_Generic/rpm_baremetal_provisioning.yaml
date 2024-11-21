@@ -1,6 +1,6 @@
 ---
 - name: Install epel package
-  hosts: allRockyLinux:k8controlnodes:k8workernodes
+  hosts: allRockyLinux
   gather_facts: true
   become: true
   tasks:
