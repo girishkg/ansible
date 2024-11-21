@@ -41,11 +41,12 @@
         - openssh-server
         - openssh-clients
       state: present
-  - name: Enable NTP-Chrony on boot
-    ansible.builtin.systemd_service:
+  - name: Enable the services on boot
+    systemd:
       name: 
         - chronyd
         - sshd
+      state: started
       enabled: true
       masked: no
 
