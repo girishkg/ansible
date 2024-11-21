@@ -1,5 +1,5 @@
 ---
-- name: Add /etc/hosts file entries on all the hosts
+- name: Adding /etc/hosts file entries on all the hosts
   hosts: allRockyLinux
   tasks:
   - name: generate file
@@ -8,5 +8,5 @@
       path: /etc/hosts
       block: |
         {% for host in groups['allRockyLinux'] %} 
-        {{ hostvars[host]['ansible_facts']['ens192']['ipv4']['address'] }} {{ hostvars[host]['ansible_facts']['fqdn'] }} {{ hostvars[host]['ansible_facts']['hostname'] }} 
+        {{ hostvars[host]['ansible_facts']['ens192']['ipv4']['address'] }} {{ hostvars[host]['ansible_facts']['hostfqdn'] }} {{ hostvars[host]['ansible_facts']['hostname'] }} 
         {% endfor %}
