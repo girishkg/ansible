@@ -24,10 +24,5 @@
       ssh_key_type: rsa
       shell: /bin/bash
       password: "{{ default_user_password | password_hash('sha512') }}" # Note that you need to complete running rpm_baremetal_provisioning.yaml
-      uid: "{{ user_uid }}"
       system: false
     loop: "{{ new_users }}"
-
-
-
-

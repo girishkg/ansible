@@ -3,7 +3,6 @@
 default_user_password: Passw0rd@2025
 user_group: sonar
 group_guid: 1500
-user_uid: 1800
 new_users:
   - sonar1
   - sonar2
