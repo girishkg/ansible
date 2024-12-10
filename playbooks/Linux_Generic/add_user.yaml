@@ -17,7 +17,7 @@
     user:
       name: "{{ item }}"
       state: present
-      password: "{{ default_user_password | password_hash('sha512','A512') }}"
+      password: "{{ default_user_password }}"
       uid: "{{ user_uid }}"
       system: false
     loop: "{{ new_users }}"
