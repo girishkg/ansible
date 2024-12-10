@@ -1,0 +1,29 @@
+---
+- name: Add user across specified host group
+  hosts: allRockyLinux
+  gather_facts: true
+  vars_files:
+    - /etc/ansible/playbooks/Linux_Generic/vars_usersAndGroups.yml
+    
+  tasks:
+  - name: Task-1 - Create a group
+    group:
+      name: "{{ user_group }}"
+      state: present
+      gid: "{{ group_guid }}"
+      local: true
+      system: false
+
+  - name: Task-2 - Create users
+    user:
+      name: "{{ item }}"
+      state: present
+      password: "{{ default_user_password | password_hash('sha512','A512') }}"
+      uid: "{{ user_uid }}"
+      local: true
+      system: false
+    loop: "{{ new_users }}"
+
+
+
+

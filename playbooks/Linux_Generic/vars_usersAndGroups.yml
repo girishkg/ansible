@@ -1,0 +1,17 @@
+---
+# Variables file to include while adding users, groups with password
+default_user_password: Passw0rd@2025
+user_group: sonar
+group_guid: 1500
+user_uid: 1800
+new_users:
+  - sonar1
+  - sonar2
+  - sonar3
+  - sonar4
+  - sonar5
+  - sonar6
+  - sonar7
+  - sonar8
+  - sonar9
+  - sonar10
