@@ -18,5 +18,3 @@
     group:
       name: "{{ delete_group }}"
       state: absent
-      remove: yes
-      force: true
