@@ -1,0 +1,22 @@
+---
+- name: Delete user across specified host group
+  hosts: allRockyLinux
+  gather_facts: true
+  vars_files:
+    - /etc/ansible/playbooks/Linux_Generic/vars_delete_user_groups.yml
+    
+  tasks:
+  - name: Task-1 - Delete users
+    user:
+      name: "{{ item }}"
+      state: absent
+      remove: yes
+      force: true
+    loop: "{{ new_users }}"
+
+  - name: Task-2 - Delete a group
+    group:
+      name: "{{ user_group }}"
+      state: absent
+      remove: yes
+      force: true
