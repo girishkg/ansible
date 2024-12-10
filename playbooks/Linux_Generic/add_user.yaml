@@ -11,7 +11,6 @@
       name: "{{ user_group }}"
       state: present
       gid: "{{ group_guid }}"
-      local: true
       system: false
 
   - name: Task-2 - Create users
@@ -20,7 +19,6 @@
       state: present
       password: "{{ default_user_password | password_hash('sha512','A512') }}"
       uid: "{{ user_uid }}"
-      local: true
       system: false
     loop: "{{ new_users }}"
 
