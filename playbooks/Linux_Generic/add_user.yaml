@@ -16,7 +16,13 @@
   - name: Task-2 - Create users
     user:
       name: "{{ item }}"
+      group: "{{ user_group }}"
       state: present
+      create_home: true
+      generate_ssh_key: true
+      ssh_key_bits: 2048
+      ssh_key_type: rsa
+      shell: /bin/bash
       password: "{{ default_user_password | password_hash('sha512') }}"
       uid: "{{ user_uid }}"
       system: false
