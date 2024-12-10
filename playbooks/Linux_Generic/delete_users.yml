@@ -12,11 +12,11 @@
       state: absent
       remove: yes
       force: true
-    loop: "{{ new_users }}"
+    loop: "{{ delete_users }}"
 
   - name: Task-2 - Delete a group
     group:
-      name: "{{ user_group }}"
+      name: "{{ delete_group }}"
       state: absent
       remove: yes
       force: true

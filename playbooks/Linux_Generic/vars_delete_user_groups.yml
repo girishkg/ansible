@@ -1,0 +1,14 @@
+---
+# Variables file to delete users and groups
+delete_group: sonar
+delete_users:
+  - sonar1
+  - sonar2
+  - sonar3
+  - sonar4
+  - sonar5
+  - sonar6
+  - sonar7
+  - sonar8
+  - sonar9
+  - sonar10
